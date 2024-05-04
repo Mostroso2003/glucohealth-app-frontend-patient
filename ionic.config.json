@@ -1,0 +1,7 @@
+{
+  "name": "glucohealth-app-frontend-patient",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
