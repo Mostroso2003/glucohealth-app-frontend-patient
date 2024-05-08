@@ -35,12 +35,7 @@ import '@ionic/react/css/palettes/dark.system.css'
 import './theme/variables.css'
 
 import { TabsLayout } from './layout/tabs-layout'
-import {
-  DashboardPage,
-  LoginPage,
-  SettingsPage,
-  PatientPage,
-} from '~/pages'
+import { DashboardPage, LoginPage, SettingsPage, PatientPage, PatientInfoSubmissionPage } from '~/pages'
 import { ROUTES } from '~/shared/constants/routes'
 import Providers from './providers'
 
@@ -73,11 +68,12 @@ export const App: React.FC = () => (
                   component={PatientPage}
                 />
 
-                <Redirect
+                <Route
                   exact
-                  from={ROUTES.APP.PATH}
-                  to={ROUTES.APP.DASHBOARD.PATH}
+                  path={ROUTES.APP.PATIENT_DATA_FORM.PATH}
+                  component={PatientInfoSubmissionPage}
                 />
+
               </IonRouterOutlet>
             </TabsLayout>
           </Route>

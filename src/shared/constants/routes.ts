@@ -13,5 +13,6 @@ export const ROUTES = {
     },
     PATIENT: { PATH: '/app/patient' },
     SETTINGS: { PATH: '/app/settings' },
+    PATIENT_DATA_FORM: { PATH: '/app/patient-data-form' },
   },
 }
