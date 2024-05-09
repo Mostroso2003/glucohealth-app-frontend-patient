@@ -1,8 +1,8 @@
 export interface PatientDataDto {
-    fullname: string
-    phoneNumber: string
-    birthDate: string
-    weight: number
-    height: number
+    fullname: string | null
+    phoneNumber: string | null
+    birthDate: string | null
+    weight: number | null
+    height: number | null
   }
   

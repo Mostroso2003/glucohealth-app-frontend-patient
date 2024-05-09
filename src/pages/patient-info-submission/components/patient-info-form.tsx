@@ -5,6 +5,7 @@ import {
   IonDatetimeButton,
   IonModal,
   IonLabel,
+  IonText,
 } from '@ionic/react'
 import { useFormik } from 'formik'
 import { useHistory } from 'react-router'
@@ -27,7 +28,7 @@ export function PatientDataForm() {
       onSubmit: values => {
         history.push(ROUTES.APP.PATH)
       },
-      validationSchema: patientDataSchema,
+      validationSchema: patientDataSchema
     })
 
   return (
@@ -57,13 +58,30 @@ export function PatientDataForm() {
       />
 
       <>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <IonLabel>Fecha de Nacimiento</IonLabel>
-          <IonDatetimeButton datetime="birthDate"></IonDatetimeButton>
+        <div className="flex flex-col gap-3">
+          <label className="flex justify-between items-center">
+            <IonText slot="time-target" className="flex items-center gap-2">
+              Fecha de Nacimiento
+            </IonText>
+            <IonDatetimeButton datetime="birthDate"></IonDatetimeButton>
+          </label>
         </div>
 
         <IonModal keepContentsMounted={true}>
-          <IonDatetime id="birthDate" presentation="date"></IonDatetime>
+          <IonDatetime
+            id="birthDate"
+            presentation="date"
+            value={values.birthDate}
+            onIonChange={e => {
+              handleChange({
+                target: {
+                  name: 'birthDate',
+                  value: (e.detail.value as string).split('T')[0],
+                },
+              })
+            }}
+            max={new Date().toISOString()}
+          ></IonDatetime>
         </IonModal>
       </>
 
