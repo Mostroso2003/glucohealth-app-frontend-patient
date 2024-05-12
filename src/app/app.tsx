@@ -35,7 +35,14 @@ import '@ionic/react/css/palettes/dark.system.css'
 import './theme/variables.css'
 
 import { TabsLayout } from './layout/tabs-layout'
-import { DashboardPage, LoginPage, SettingsPage, PatientPage, PatientInfoSubmissionPage } from '~/pages'
+import {
+  DashboardPage,
+  LoginPage,
+  SettingsPage,
+  PatientPage,
+  PatientInfoSubmissionPage,
+  CompleteProfilePage,
+} from '~/pages'
 import { ROUTES } from '~/shared/constants/routes'
 import Providers from './providers'
 
@@ -47,6 +54,13 @@ export const App: React.FC = () => (
       <IonReactRouter>
         <IonRouterOutlet>
           <Route exact path={ROUTES.LOGIN.PATH} component={LoginPage} />
+
+          <Route
+            exact
+            path={ROUTES.LOGIN.COMPLETE_PROFILE.PATH}
+            component={CompleteProfilePage}
+          />
+
           <Route path={ROUTES.APP.PATH}>
             <TabsLayout>
               <IonRouterOutlet>
@@ -73,7 +87,6 @@ export const App: React.FC = () => (
                   path={ROUTES.APP.PATIENT_DATA_FORM.PATH}
                   component={PatientInfoSubmissionPage}
                 />
-
               </IonRouterOutlet>
             </TabsLayout>
           </Route>

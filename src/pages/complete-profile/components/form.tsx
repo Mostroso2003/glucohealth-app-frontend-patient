@@ -13,7 +13,7 @@ import { ROUTES } from '~/shared/constants/routes'
 import { PatientDataDto } from '~/features/patient-data/dto/patient-data'
 import { patientDataSchema } from '~/features/patient-data/patient-data-schema'
 
-export function PatientDataForm() {
+export function Form() {
   const history = useHistory()
 
   const { handleChange, handleSubmit, errors, touched, values } =
