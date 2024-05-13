@@ -1,9 +1,6 @@
-export interface Patient {
-  id: string
-  fullName: string
-  email: string
-  phoneNumber: string
-  nationalId: string
+import { User } from './user'
+
+export interface Patient extends User {
   age: number
   weightInKg: number
   heightInCm: number

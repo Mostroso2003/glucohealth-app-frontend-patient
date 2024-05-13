@@ -45,55 +45,81 @@ import {
 } from '~/pages'
 import { ROUTES } from '~/shared/constants/routes'
 import Providers from './providers'
+import { loginFromLocalStorage } from '~/features/auth/model/auth'
 
 setupIonicReact()
 
-export const App: React.FC = () => (
-  <Providers>
-    <IonApp>
-      <IonReactRouter>
-        <IonRouterOutlet>
-          <Route exact path={ROUTES.LOGIN.PATH} component={LoginPage} />
+export const App: React.FC = () => {
+  try {
+    const user = loginFromLocalStorage()
 
-          <Route
-            exact
-            path={ROUTES.LOGIN.COMPLETE_PROFILE.PATH}
-            component={CompleteProfilePage}
-          />
+    // If user is already logged in, redirect outside login
+    if (location.pathname === ROUTES.LOGIN.PATH) {
+      // If user don't have his full name stored in database, need to complete his profile
+      if (!user.fullName) {
+        location.href = ROUTES.LOGIN.PATH
+      } else {
+        location.href = ROUTES.APP.PATH
+      }
+    }
+  } catch (e) {
+    if (location.pathname !== ROUTES.LOGIN.PATH)
+      location.href = ROUTES.LOGIN.PATH
+  }
 
-          <Route path={ROUTES.APP.PATH}>
-            <TabsLayout>
-              <IonRouterOutlet>
-                <Route
-                  exact
-                  path={ROUTES.APP.DASHBOARD.PATH}
-                  component={DashboardPage}
-                />
+  return (
+    <Providers>
+      <IonApp>
+        <IonReactRouter>
+          <IonRouterOutlet>
+            <Route exact path={ROUTES.LOGIN.PATH} component={LoginPage} />
 
-                <Route
-                  exact
-                  path={ROUTES.APP.SETTINGS.PATH}
-                  component={SettingsPage}
-                />
+            <Route
+              exact
+              path={ROUTES.LOGIN.COMPLETE_PROFILE.PATH}
+              component={CompleteProfilePage}
+            />
 
-                <Route
-                  exact
-                  path={ROUTES.APP.PATIENT.PATH}
-                  component={PatientPage}
-                />
+            <Route path={ROUTES.APP.PATH}>
+              <TabsLayout>
+                <IonRouterOutlet>
+                  <Route
+                    exact
+                    path={ROUTES.APP.DASHBOARD.PATH}
+                    component={DashboardPage}
+                  />
 
-                <Route
-                  exact
-                  path={ROUTES.APP.PATIENT_DATA_FORM.PATH}
-                  component={PatientInfoSubmissionPage}
-                />
-              </IonRouterOutlet>
-            </TabsLayout>
-          </Route>
+                  <Route
+                    exact
+                    path={ROUTES.APP.SETTINGS.PATH}
+                    component={SettingsPage}
+                  />
 
-          <Redirect exact from={ROUTES.ROOT} to={ROUTES.LOGIN.PATH} />
-        </IonRouterOutlet>
-      </IonReactRouter>
-    </IonApp>
-  </Providers>
-)
+                  <Route
+                    exact
+                    path={ROUTES.APP.PATIENT.PATH}
+                    component={PatientPage}
+                  />
+
+                  <Route
+                    exact
+                    path={ROUTES.APP.PATIENT_DATA_FORM.PATH}
+                    component={PatientInfoSubmissionPage}
+                  />
+
+                  <Redirect
+                    exact
+                    from={ROUTES.APP.PATH}
+                    to={ROUTES.APP.DASHBOARD.PATH}
+                  />
+                </IonRouterOutlet>
+              </TabsLayout>
+            </Route>
+
+            <Redirect exact from={ROUTES.ROOT} to={ROUTES.LOGIN.PATH} />
+          </IonRouterOutlet>
+        </IonReactRouter>
+      </IonApp>
+    </Providers>
+  )
+}
