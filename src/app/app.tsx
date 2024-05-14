@@ -57,7 +57,7 @@ export const App: React.FC = () => {
     if (location.pathname === ROUTES.LOGIN.PATH) {
       // If user don't have his full name stored in database, need to complete his profile
       if (!user.fullName) {
-        location.href = ROUTES.LOGIN.PATH
+        location.href = ROUTES.LOGIN.COMPLETE_PROFILE.PATH
       } else {
         location.href = ROUTES.APP.PATH
       }
