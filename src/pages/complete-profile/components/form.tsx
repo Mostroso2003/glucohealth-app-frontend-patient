@@ -28,7 +28,7 @@ export function Form() {
       onSubmit: values => {
         history.push(ROUTES.APP.PATH)
       },
-      validationSchema: patientDataSchema,
+      //validationSchema: patientDataSchema,
     })
 
   return (
