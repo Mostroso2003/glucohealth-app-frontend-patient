@@ -2,7 +2,7 @@ import { axiosClient } from '~/shared/api'
 import { PATIENTS_BACKEND_URL } from '../constants'
 import { BackendResponse } from '~/shared/types/dto/backend-response'
 import { PaginatedItems } from '~/shared/types/dto/paginated-items'
-import { Patient } from '~/shared/types'
+import { Patient } from '~/shared/types/patient'
 import { HttpStatusCode } from 'axios'
 
 export async function getPaginatedPatients() {

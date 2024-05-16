@@ -40,7 +40,6 @@ import {
   LoginPage,
   SettingsPage,
   PatientPage,
-  PatientInfoSubmissionPage,
   CompleteProfilePage,
 } from '~/pages'
 import { ROUTES } from '~/shared/constants/routes'
@@ -104,7 +103,7 @@ export const App: React.FC = () => {
                   <Route
                     exact
                     path={ROUTES.APP.PATIENT_DATA_FORM.PATH}
-                    component={PatientInfoSubmissionPage}
+                    component={CompleteProfilePage}
                   />
 
                   <Redirect
