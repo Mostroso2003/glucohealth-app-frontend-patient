@@ -20,7 +20,7 @@
   --ion-color-accent-shade: #121a3e;
   --ion-color-accent-tint: #2c3559;
 
-  --ion-background-color: #fff5e0;
+  --ion-background-color: #f8f8ff;
   --ion-background-color-rgb: 255, 245, 224;
 
   --ion-text-color: #050315;
@@ -92,4 +92,8 @@
   --ion-color-contrast-rgb: var(--ion-color-accent-contrast-rgb);
   --ion-color-shade: var(--ion-color-accent-shade);
   --ion-color-tint: var(--ion-color-accent-tint);
+}
+
+::-ms-reveal {
+  display: none;
 }
