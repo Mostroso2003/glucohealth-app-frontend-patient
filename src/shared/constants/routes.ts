@@ -16,6 +16,6 @@ export const ROUTES = {
       },
     },
     PATIENT: { PATH: '/app/patient' },
-    SETTINGS: { PATH: '/app/settings' },
+    TREATMENT: { PATH: '/app/treatment' },
   },
 }

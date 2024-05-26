@@ -38,8 +38,8 @@ import { TabsLayout } from './layout/tabs-layout'
 import {
   DashboardPage,
   LoginPage,
-  SettingsPage,
   CompleteProfilePage,
+  TreatmentPage,
 } from '~/pages'
 import { ROUTES } from '~/shared/constants/routes'
 import Providers from './providers'
@@ -89,8 +89,8 @@ export const App: React.FC = () => {
 
                   <Route
                     exact
-                    path={ROUTES.APP.SETTINGS.PATH}
-                    component={SettingsPage}
+                    path={ROUTES.APP.TREATMENT.PATH}
+                    component={TreatmentPage}
                   />
 
                   <Route

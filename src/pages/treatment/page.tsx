@@ -9,7 +9,7 @@ import {
 } from '@ionic/react'
 import { MedicationCard } from '~/shared/components/medication-card'
 
-export function SettingsPage() {
+export function TreatmentPage() {
   let isDarkMode = matchMedia('(prefers-color-scheme: dark)').matches
   
   return (
