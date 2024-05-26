@@ -6,6 +6,8 @@
 import { IonCard, IonCheckbox } from '@ionic/react'
 
 export function WeekDays() {
+  let isDarkMode = matchMedia('(prefers-color-scheme: dark)').matches
+
   const days = ['D', 'L', 'M', 'M', 'J', 'V', 'S']
   const months = [
     'Enero',
@@ -26,17 +28,17 @@ export function WeekDays() {
   const firstDay = date.getDate() - date.getDay()
 
   return (
-    <div className='mt-5'>
-      <span className="ml-8 mb-0 font-bold text-lg text-accent-color">
-        {months[date.getMonth()]}
-      </span>
-      <div className="grid grid-cols-7 gap-1 p-4 mt-0 pt-0">
+    <div className={`pt-5 ${isDarkMode ? 'bg-bg-datetime-customized-color-dark' : 'bg-bg-datetime-customized-color-light'}`}>
+        <span className="ml-4 font-bold text-lg">
+          {months[date.getMonth()]}
+        </span>
+      <div className="grid grid-cols-7 gap-1 p-4 mt-1 pt-0">
         {days.map((dia, index) => (
           <div
             key={index}
             className={
               index === date.getDay()
-                ? 'col-span-1 bg-accent-color text-white rounded flex flex-col items-center p-2'
+                ? 'col-span-1 bg-primary-color-shade text-white rounded flex flex-col items-center p-2'
                 : 'col-span-1 flex flex-col items-center p-2'
             }
           >
