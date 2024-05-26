@@ -17,14 +17,22 @@ export function MedicationCard({ medication }: Props) {
   return (
     <IonCard className="rounded shadow-md">
       <div className="grid grid-cols-5 gap-1">
-        <div className={`col-span-1 p-2 flex flex-col justify-center items-center ${isDarkMode ? 'bg-bg-datetime-customized-color-dark' : 'bg-bg-datetime-customized-color-light'}`}>
-          <span className={`font-bold ${isDarkMode ? 'text-primary-color' : 'text-accent-color'}`}>{medication.time}</span>
-          <div className=' rounded-full w-10'>
-            <IonIcon className='ml-1 mt-1' icon={pill_svg} size="large" color={`${isDarkMode ? 'primary' : 'accent'}`}></IonIcon>
+        <div
+          className={`col-span-1 p-2 flex flex-col justify-center items-center ${isDarkMode ? 'bg-bg-datetime-customized-color-dark' : 'bg-bg-datetime-customized-color-light'}`}
+        >
+          <div className=" rounded-full w-10">
+            <IonIcon
+              aria-hidden="true"
+              className="ml-1 mt-1"
+              icon={pill_svg}
+              size="large"
+              color={`${isDarkMode ? 'primary' : 'accent'}`}
+            ></IonIcon>
           </div>
         </div>
         <div className="col-span-3 p-2">
           <div>
+            <span className={`text-sm`}>{medication.time}</span>
             <h3 className="font-bold text-base text-text-color mt-0 mb-0">
               {medication.medicament}
             </h3>
