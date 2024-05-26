@@ -13,9 +13,8 @@ import {
   IonCheckbox,
   IonItemDivider,
 } from '@ionic/react'
-import ExploreContainer from '~/shared/components/ExploreContainer'
-import { MedicationCard } from './components/medication-card'
 import { WeekDays } from './components/week-days'
+import { MedicationCard } from '~/shared/components/medication-card'
 
 export function DashboardPage() {
   return (
@@ -26,10 +25,10 @@ export function DashboardPage() {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <WeekDays/>
+        <WeekDays />
 
         <IonText className="">
-          <h2 className="ml-2">Medicaciones por tomar</h2>
+          <h1 className="ml-2 text-xl font-bold">Medicaciones por tomar</h1>
         </IonText>
 
         <MedicationCard

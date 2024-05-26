@@ -39,7 +39,6 @@ import {
   DashboardPage,
   LoginPage,
   SettingsPage,
-  PatientPage,
   CompleteProfilePage,
 } from '~/pages'
 import { ROUTES } from '~/shared/constants/routes'
@@ -92,12 +91,6 @@ export const App: React.FC = () => {
                     exact
                     path={ROUTES.APP.SETTINGS.PATH}
                     component={SettingsPage}
-                  />
-
-                  <Route
-                    exact
-                    path={ROUTES.APP.PATIENT.PATH}
-                    component={PatientPage}
                   />
 
                   <Route
