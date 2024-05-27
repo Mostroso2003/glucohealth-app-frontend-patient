@@ -118,24 +118,26 @@ export function ProfilePage() {
               </div>
             </section>
             <section className="mt-5 w-screen pl-3">
-              <h2 className="text-lg font-bold mb-1">
+              <h2 className="text-lg font-bold mb-1">Número de teléfono</h2>
+              <p>
                 <IonIcon
                   icon={callOutline}
                   color="current"
                   className="mr-2"
                 ></IonIcon>
-                Número de teléfono
-              </h2>
-              <p>{data.phoneNumber}</p>
+                {data.phoneNumber}
+              </p>
               <h2 className="text-lg font-bold mb-1 mt-7">
+                Correo electrónico
+              </h2>
+              <p>
                 <IonIcon
                   icon={mailOutline}
                   color="current"
                   className="mr-2"
                 ></IonIcon>
-                Correo electrónico
-              </h2>
-              <p>{data.email}</p>
+                {data.email}
+              </p>
             </section>
             <section className="mt-40">
               <LogoutButton />
