@@ -21,7 +21,7 @@ export function DashboardPage() {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle size="large">Hoy</IonTitle>
+          <IonTitle>Hoy</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

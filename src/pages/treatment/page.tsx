@@ -23,6 +23,7 @@ export function TreatmentPage() {
       <IonContent fullscreen>
         <div className={`flex justify-center ${isDarkMode ? 'bg-bg-datetime-customized-color-dark' : 'bg-bg-datetime-customized-color-light'}`}>
           <IonDatetime
+            locale="es"
             mode="ios"
             id="treatmentDay"
             presentation="date"

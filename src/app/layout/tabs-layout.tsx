@@ -27,6 +27,10 @@ export function TabsLayout({ children }: Props) {
           <IonIcon aria-hidden="true" icon={pill_svg}/>
           <IonLabel>Tratamiento</IonLabel>
         </IonTabButton>
+        <IonTabButton tab="profile" href={ROUTES.APP.PATIENT.PATH}>
+          <IonIcon aria-hidden="true" icon={person}/>
+          <IonLabel>Perfil</IonLabel>
+        </IonTabButton>
       </IonTabBar>
     </IonTabs>
   )
