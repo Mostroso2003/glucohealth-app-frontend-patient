@@ -6,24 +6,25 @@ import {
   IonContent,
   IonText,
   IonChip,
-  useIonLoading,
   IonIcon,
-  IonButton,
-  IonAlert,
 } from '@ionic/react'
-import { callOutline, logOutOutline, mailOutline } from 'ionicons/icons'
-import { useQuery } from '@tanstack/react-query'
-import { QUERY_KEYS } from '~/features/patients/constants'
-import { getOwnProfile } from '~/features/patients/services/get-profile'
+import { callOutline, mailOutline } from 'ionicons/icons'
 import { LogoutButton } from './components/logout-button'
+import { useStore } from '~/shared/store/store'
+import { logout } from '~/features/auth/model/auth'
+import { useHistory } from 'react-router'
 
 export function ProfilePage() {
+  const user = useStore(state => state.user)
+
+  const history = useHistory()
+
   const data = {
-    id: 0,
-    fullName: 'Aurimart García',
-    email: 'user@example.com',
-    phoneNumber: '04164897034',
-    nationalId: '29907053',
+    id: user?.id,
+    fullName: user?.fullName,
+    email: user?.email,
+    phoneNumber: user?.phoneNumber,
+    nationalId: user?.nationalId,
     age: 21,
     weightInKg: 49,
     heightInCm: 153,
@@ -46,6 +47,12 @@ export function ProfilePage() {
       },
     ],
   }
+
+  function logoutAndRedirect() {
+    logout()
+    history.push('/login')
+  }
+
   return (
     <>
       <IonPage>
@@ -140,7 +147,7 @@ export function ProfilePage() {
               </p>
             </section>
             <section className="mt-40">
-              <LogoutButton />
+              <LogoutButton onConfirm={logoutAndRedirect} />
             </section>
           </main>
         </IonContent>
