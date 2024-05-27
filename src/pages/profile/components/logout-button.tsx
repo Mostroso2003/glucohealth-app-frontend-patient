@@ -1,7 +1,11 @@
 import { IonAlert, IonButton, IonIcon } from '@ionic/react'
 import { logOutOutline } from 'ionicons/icons'
 
-export function LogoutButton() {
+interface Props {
+  onConfirm: () => void
+}
+
+export function LogoutButton({ onConfirm }: Props) {
   return (
     <>
       <IonButton id="log-out">
@@ -20,9 +24,7 @@ export function LogoutButton() {
           {
             text: 'Continuar',
             role: 'confirm',
-            handler: () => {
-              console.log('Alert confirmed')
-            },
+            handler: onConfirm,
           },
           {
             text: 'Cancelar',
