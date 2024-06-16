@@ -34,6 +34,9 @@ import '@ionic/react/css/palettes/dark.system.css'
 /* Theme variables */
 import './theme/theme.css'
 
+/* Notifications */
+import OneSignal from 'react-onesignal'
+
 import { TabsLayout } from './layout/tabs-layout'
 import {
   DashboardPage,
@@ -45,10 +48,19 @@ import {
 import { ROUTES } from '~/shared/constants/routes'
 import Providers from './providers'
 import { loginFromLocalStorage } from '~/features/auth/model/auth'
+import { useEffect } from 'react'
 
 setupIonicReact()
 
 export const App: React.FC = () => {
+  //Do use port 3000
+  useEffect(() => {
+    console.log('as')
+    OneSignal.init({
+      appId: 'ede82b86-6db6-4985-8e4d-4f01dd961baf', 
+    })
+  }, [])
+
   try {
     const user = loginFromLocalStorage()
 
