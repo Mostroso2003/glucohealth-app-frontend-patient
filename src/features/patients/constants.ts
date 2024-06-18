@@ -5,4 +5,5 @@ export const OWN_PATIENT_BACKEND_URL = '/patients/me'
 export const QUERY_KEYS = {
   PATIENTS_LIST: 'patients-list',
   PATIENT_DATA: 'patient-data',
+  PROFILE: 'profile-data',
 }

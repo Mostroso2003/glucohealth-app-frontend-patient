@@ -7,19 +7,41 @@ import {
   IonText,
   IonChip,
   IonIcon,
+  useIonLoading,
 } from '@ionic/react'
 import { callOutline, mailOutline } from 'ionicons/icons'
 import { LogoutButton } from './components/logout-button'
-import { useStore } from '~/shared/store/store'
+import { QUERY_KEYS } from '~/features/patients/constants'
 import { logout } from '~/features/auth/model/auth'
 import { useHistory } from 'react-router'
+import { useQuery } from '@tanstack/react-query'
+import { getOwnProfile } from '~/features/patients/services/get-profile'
 
 export function ProfilePage() {
-  const user = useStore(state => state.user)
-
   const history = useHistory()
 
-  const data = {
+  const [present, dismiss] = useIonLoading()
+
+  const { data, isPending, isFetching, isError } = useQuery({
+    queryKey: [QUERY_KEYS.PROFILE],
+    queryFn: async () => {
+      try {
+        present()
+        const patient = await getOwnProfile()
+        return patient
+      } catch (e) {
+        throw e
+      } finally {
+        dismiss()
+      }
+    },
+  })
+
+  if (isPending || isFetching) return null
+
+  if (isError) return <></>
+
+  /* const data = {
     id: user?.id,
     fullName: user?.fullName,
     email: user?.email,
@@ -46,7 +68,7 @@ export function ProfilePage() {
         ],
       },
     ],
-  }
+  } */
 
   function logoutAndRedirect() {
     logout()
@@ -75,8 +97,7 @@ export function ProfilePage() {
                 CI - {data.nationalId}
               </h2>
             </IonText>
-
-            {data.age ? (
+            {data.age !== null ? (
               <IonChip className="w-[fit-content] font-bold" color="primary">
                 {data.age} Años
               </IonChip>
@@ -124,25 +145,27 @@ export function ProfilePage() {
                 </IonText>
               </div>
             </section>
-            <section className="mt-5 w-screen px-5">
-              <h2 className="text-lg font-bold mb-1">
+            <section className="mt-5 ml-2 w-screen pl-3">
+              <h2 className="text-lg font-bold mb-1">Número de teléfono</h2>
+              <p>
                 <IonIcon
                   icon={callOutline}
                   color="current"
                   className="mr-2"
                 ></IonIcon>
-                Número de teléfono
-              </h2>
-              <p>{data.phoneNumber}</p>
+                {data.phoneNumber}
+              </p>
               <h2 className="text-lg font-bold mb-1 mt-7">
+                Correo electrónico
+              </h2>
+              <p>
                 <IonIcon
                   icon={mailOutline}
                   color="current"
                   className="mr-2"
                 ></IonIcon>
-                Correo electrónico
-              </h2>
-              <p>{data.email}</p>
+                {data.email}
+              </p>
             </section>
             <section className="mt-40">
               <LogoutButton onConfirm={logoutAndRedirect} />

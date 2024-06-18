@@ -34,6 +34,9 @@ import '@ionic/react/css/palettes/dark.system.css'
 /* Theme variables */
 import './theme/theme.css'
 
+/* Notifications */
+import OneSignal from 'react-onesignal'
+
 import { TabsLayout } from './layout/tabs-layout'
 import {
   DashboardPage,
