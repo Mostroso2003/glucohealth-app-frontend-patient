@@ -4,7 +4,7 @@ import {
   IonList,
 } from '@ionic/react'
 import { Fragment } from 'react'
-import { MedicationCard } from './medication-card'
+/* import { MedicationCard } from './medication-card' */
 import { getPaginatedPatients } from '~/features/patients/services/get-paginated'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { QUERY_KEYS } from '~/features/patients/constants'
@@ -31,12 +31,13 @@ export function PatientsList() {
   //}
 
   const data = ['a', 'b']
+  
   return (
     <>
       <IonList className="overflow-y-scroll max-w-xl gap-5 w-full">
-        {data.map(medication => (
+        {/* {data.map(medication => (
           <MedicationCard key={medication} medication={medication} />
-        ))}
+        ))} */}
       </IonList>
     </>
   )

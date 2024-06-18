@@ -8,6 +8,7 @@ import { LoginDto } from '../dto/login'
 import { loginService } from '../services/login'
 import { useStore } from '~/shared/store/store'
 import { User } from '~/shared/types/user'
+import OneSignal from 'react-onesignal'
 
 const TOKEN_KEY = 'token'
 const USER_INFO_KEY = 'user'
@@ -21,6 +22,8 @@ export async function login({ email, password }: LoginDto) {
   axiosClient.defaults.headers.Authorization = `Bearer ${token}`
 
   useStore.getState().login(user, token)
+
+  console.log(import.meta.env.VITE_ONESIGNAL_APP_ID)
 
   return user
 }

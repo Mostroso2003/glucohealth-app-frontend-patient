@@ -45,10 +45,14 @@ import {
 import { ROUTES } from '~/shared/constants/routes'
 import Providers from './providers'
 import { loginFromLocalStorage } from '~/features/auth/model/auth'
+import OneSignal from 'react-onesignal'
+import { useEffect, useRef } from 'react'
 
 setupIonicReact()
 
 export const App: React.FC = () => {
+  const alreadyInitializedOneSignal = useRef(false)
+
   try {
     const user = loginFromLocalStorage()
 
@@ -65,6 +69,18 @@ export const App: React.FC = () => {
     if (location.pathname !== ROUTES.LOGIN.PATH)
       location.href = ROUTES.LOGIN.PATH
   }
+
+  useEffect(() => {
+    if (alreadyInitializedOneSignal.current) return
+    ;(async () => {
+      await OneSignal.init({
+        appId: import.meta.env.VITE_ONESIGNAL_APP_ID,
+        allowLocalhostAsSecureOrigin: true,
+      })
+      await OneSignal.Slidedown.promptPush()
+      alreadyInitializedOneSignal.current = true
+    })()
+  }, [])
 
   return (
     <Providers>
