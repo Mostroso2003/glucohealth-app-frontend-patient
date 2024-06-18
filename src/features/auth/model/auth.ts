@@ -23,7 +23,7 @@ export async function login({ email, password }: LoginDto) {
 
   useStore.getState().login(user, token)
 
-  console.log(import.meta.env.VITE_ONESIGNAL_APP_ID)
+  await OneSignal.login(String(user.id))
 
   return user
 }
@@ -33,6 +33,8 @@ export function logout() {
   removeFromLocalStorage(TOKEN_KEY)
 
   axiosClient.defaults.headers.Authorization = ''
+
+  OneSignal.logout()
 
   useStore.getState().logout()
 }
@@ -53,6 +55,8 @@ export function loginFromLocalStorage() {
   axiosClient.defaults.headers.Authorization = `Bearer ${token}`
 
   useStore.getState().login(user, token)
+
+  OneSignal.login(String(user.id))
 
   return user
 }
