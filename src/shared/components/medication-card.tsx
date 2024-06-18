@@ -40,7 +40,12 @@ export function MedicationCard({ medication }: Props) {
           <span className="text-text-color">{medication.dosage}</span>
         </div>
         <div className="col-span-1 p-4 flex items-center justify-center">
-          <IonCheckbox style={{ '--size': '40px' }} mode="ios" />
+          <IonCheckbox
+            style={{ '--size': '40px' }}
+            mode="ios"
+            checked={medication.taken}
+            disabled={medication.taken}
+          />
         </div>
       </div>
     </IonCard>

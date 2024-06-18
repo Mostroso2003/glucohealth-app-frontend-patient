@@ -48,7 +48,6 @@ import {
 import { ROUTES } from '~/shared/constants/routes'
 import Providers from './providers'
 import { loginFromLocalStorage } from '~/features/auth/model/auth'
-import OneSignal from 'react-onesignal'
 import { useEffect, useRef } from 'react'
 
 setupIonicReact()

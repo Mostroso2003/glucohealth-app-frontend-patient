@@ -19,20 +19,12 @@ export function DashboardPage() {
   const [presentLoading, dismissLoading] = useIonLoading()
 
   const { data: dateTreatment } = useQuery({
-    queryKey: [
-      'DAY_TREATMENT_LIST',
-      currentDate.toLocaleString([], {
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric',
-      }),
-    ],
+    queryKey: ['CURRENT_TREATMENT_LIST'],
     queryFn: async () => {
       try {
         presentLoading()
         const res = await getOwnPatientTreatmentByDate(toIsoString(currentDate))
         const lowerDatetimeBound = new Date(currentDate)
-        lowerDatetimeBound.setMinutes(lowerDatetimeBound.getMinutes() - 30)
 
         const upperDatetimeBound = new Date(currentDate)
         upperDatetimeBound.setHours(upperDatetimeBound.getHours() + 1)
@@ -88,6 +80,7 @@ export function DashboardPage() {
                     [],
                     { hour: '2-digit', minute: '2-digit', hour12: true },
                   ),
+                  taken: schedule.actualTakingTimestamp !== null,
                 }}
               />
             )
