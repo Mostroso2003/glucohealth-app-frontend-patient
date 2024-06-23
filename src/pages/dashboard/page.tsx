@@ -6,35 +6,36 @@ import {
   IonText,
   IonContent,
   useIonLoading,
+  useIonAlert,
 } from '@ionic/react'
 import { WeekDays } from './components/week-days'
 import { MedicationCard } from '~/shared/components/medication-card'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { getOwnPatientTreatmentByDate } from '~/features/treatment/services/get-patient-treatment-by-date'
 import { toIsoString } from '~/shared/utils/construct-date-string'
+import { isMedicationInTakingRange } from '~/shared/utils/medication-in-taking-range'
+import {
+  TakeMedicationDto,
+  takeMedication as takeMedicationService,
+} from '~/features/treatment/services/take-medication'
 
 export function DashboardPage() {
   const currentDate = new Date()
 
   const [presentLoading, dismissLoading] = useIonLoading()
+  const [presentAlert] = useIonAlert()
 
-  const { data: dateTreatment } = useQuery({
+  const { data: dateTreatment, refetch } = useQuery({
     queryKey: ['CURRENT_TREATMENT_LIST'],
     queryFn: async () => {
       try {
         presentLoading()
         const res = await getOwnPatientTreatmentByDate(toIsoString(currentDate))
-        const lowerDatetimeBound = new Date(currentDate)
-
-        const upperDatetimeBound = new Date(currentDate)
-        upperDatetimeBound.setHours(upperDatetimeBound.getHours() + 1)
 
         const nextMedications = res.map(dt => ({
           ...dt,
-          schedule: dt.schedule.filter(
-            s =>
-              lowerDatetimeBound <= s.expectedTakingTimestamp &&
-              s.expectedTakingTimestamp <= upperDatetimeBound,
+          schedule: dt.schedule.filter(s =>
+            isMedicationInTakingRange(s.expectedTakingTimestamp),
           ),
         }))
         return nextMedications
@@ -43,6 +44,24 @@ export function DashboardPage() {
       } finally {
         dismissLoading()
       }
+    },
+  })
+
+  const { mutate: takeMedication } = useMutation({
+    mutationFn: async (data: Omit<TakeMedicationDto, 'treatmentId'>) => {
+      await takeMedicationService(data)
+    },
+    onMutate: () => {
+      presentLoading()
+    },
+    onSuccess: () => {
+      refetch()
+    },
+    onError: e => {
+      presentAlert('Error al tomar medicamento')
+    },
+    onSettled: () => {
+      dismissLoading()
     },
   })
 
@@ -82,6 +101,15 @@ export function DashboardPage() {
                   ),
                   taken: schedule.actualTakingTimestamp !== null,
                 }}
+                takeMedication={() =>
+                  takeMedication({
+                    medicamentId: treatment.medicament.id,
+                    takingTimestamp: toIsoString(new Date()),
+                  })
+                }
+                isTakable={isMedicationInTakingRange(
+                  schedule.expectedTakingTimestamp,
+                )}
               />
             )
           }),

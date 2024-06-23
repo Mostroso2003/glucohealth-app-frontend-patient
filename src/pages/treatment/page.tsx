@@ -7,21 +7,28 @@ import {
   IonDatetime,
   IonText,
   useIonLoading,
+  useIonAlert,
 } from '@ionic/react'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { getOwnPatientTreatmentByDate } from '~/features/treatment/services/get-patient-treatment-by-date'
+import {
+  takeMedication as takeMedicationService,
+  TakeMedicationDto,
+} from '~/features/treatment/services/take-medication'
 import { MedicationCard } from '~/shared/components/medication-card'
+import { isMedicationInTakingRange } from '~/shared/utils/medication-in-taking-range'
 import { toIsoString } from '~/shared/utils/construct-date-string'
 
 export function TreatmentPage() {
   let isDarkMode = matchMedia('(prefers-color-scheme: dark)').matches
 
   const [presentLoading, dismissLoading] = useIonLoading()
+  const [presentAlert] = useIonAlert()
 
   const [date, setDate] = useState(new Date())
 
-  const { data: dateTreatment } = useQuery({
+  const { data: dateTreatment, refetch } = useQuery({
     queryKey: [
       'DAY_TREATMENT_LIST',
       date.toLocaleString([], {
@@ -41,6 +48,24 @@ export function TreatmentPage() {
       } finally {
         dismissLoading()
       }
+    },
+  })
+
+  const { mutate: takeMedication } = useMutation({
+    mutationFn: async (data: Omit<TakeMedicationDto, 'treatmentId'>) => {
+      await takeMedicationService(data)
+    },
+    onMutate: () => {
+      presentLoading()
+    },
+    onSuccess: () => {
+      refetch()
+    },
+    onError: e => {
+      presentAlert('Error al tomar medicamento')
+    },
+    onSettled: () => {
+      dismissLoading()
     },
   })
 
@@ -94,6 +119,15 @@ export function TreatmentPage() {
                     ),
                     taken: schedule.actualTakingTimestamp !== null,
                   }}
+                  takeMedication={() =>
+                    takeMedication({
+                      medicamentId: treatment.medicament.id,
+                      takingTimestamp: toIsoString(new Date()),
+                    })
+                  }
+                  isTakable={isMedicationInTakingRange(
+                    schedule.expectedTakingTimestamp,
+                  )}
                 />
               )
             }),

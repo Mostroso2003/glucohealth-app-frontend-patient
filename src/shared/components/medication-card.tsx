@@ -9,10 +9,18 @@ import pill_svg from '~/shared/assets/pill.svg'
 
 interface Props {
   medication: Medication
+  isTakable: boolean
+  takeMedication(): void
 }
 
-export function MedicationCard({ medication }: Props) {
+export function MedicationCard({
+  medication,
+  takeMedication,
+  isTakable,
+}: Props) {
   let isDarkMode = matchMedia('(prefers-color-scheme: dark)').matches
+
+  console.log(medication.taken, isTakable)
 
   return (
     <IonCard className="rounded shadow-md">
@@ -44,7 +52,12 @@ export function MedicationCard({ medication }: Props) {
             style={{ '--size': '40px' }}
             mode="ios"
             checked={medication.taken}
-            disabled={medication.taken}
+            onIonChange={e => {
+              if (e.detail.checked) {
+                takeMedication()
+              }
+            }}
+            disabled={medication.taken || !isTakable}
           />
         </div>
       </div>
