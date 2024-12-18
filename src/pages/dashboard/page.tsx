@@ -138,7 +138,7 @@ export function DashboardPage() {
         <IonText>
           <h1 className="ml-2 text-xl font-bold">Clasificación del IMC</h1>
           <p className="ml-2 text-lg">
-            {imcData ? `IMC: ${imcRounded} (${imcClassification})` : 'No disponible'}
+            {imcData ? `IMC: ${imcRounded} (${imcClassification})` : 'Reload'}
           </p>
         </IonText>
 
